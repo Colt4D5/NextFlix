@@ -1,10 +1,23 @@
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { MagnifyingGlassIcon, BellIcon } from '@heroicons/react/24/solid'
 import Link from 'next/link'
 
 const Header = () => {
+  const [isScrolled, setIsScrolled] = useState<boolean>(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0 ? true : false)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+
+    return window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   return (
-    <header>
+    <header className={`${isScrolled ? 'bg-[#141414]' : null}`}>
       <div className="flex items-center space-x-2 md:space-x-10">
 
         <Image src="/netflix_logo.webp" className="aspect-[300-81]" width={150} height={40.5} alt="Netflix Logo" />
